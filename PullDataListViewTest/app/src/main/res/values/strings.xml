@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">PullDataListViewTest</string>
+    <string name="read_more">Read more ...</string>
+    <string name="welcome">Movie Activity</string>
+
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RecyclerVierTest</string>
+    <string name="title_activity_display_list">DisplayList</string>
+</resources>
