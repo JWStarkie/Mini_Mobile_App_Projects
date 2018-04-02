@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">RecyclerVierTest</string>
-    <string name="title_activity_display_list">DisplayList</string>
+    <string name="app_name">RecyclerViewTest</string>
+    <string name="display_list">Display List</string>
+    <string name="download_list">Download List</string>
 </resources>

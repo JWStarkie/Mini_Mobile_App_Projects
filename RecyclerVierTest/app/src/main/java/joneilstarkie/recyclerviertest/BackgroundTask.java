@@ -1,5 +1,6 @@
 package joneilstarkie.recyclerviertest;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -22,8 +23,9 @@ import java.net.URL;
 
 public class BackgroundTask extends AsyncTask<Void, Void, Void> {
 
+    ProgressDialog progressDialog;
     Context ctx;
-    String JSON_url = "http://localhost:8080/php_files/get_movie_info.php";
+    String JSON_url = "http://192.168.64.2/php_files/get_movie_info.php";
 
     public BackgroundTask(Context ctx)
     {
@@ -32,7 +34,13 @@ public class BackgroundTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPreExecute(){
-        super.onPreExecute();
+        progressDialog = new ProgressDialog(ctx);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setTitle("Please Wait ...");
+        progressDialog.setMessage("Download in Progress ...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        //super.onPreExecute();
     }
 
     @Override
@@ -47,13 +55,14 @@ public class BackgroundTask extends AsyncTask<Void, Void, Void> {
             while ((line = bufferedReader.readLine()) != null)
             {
                 stringBuilder.append(line + "\n");
+                Thread.sleep(500);
             }
             httpURLConnection.disconnect();
             String json_data = stringBuilder.toString().trim();
             JSONObject jsonObject = new JSONObject(json_data);
             JSONArray jsonArray = jsonObject.getJSONArray("server_response");
-            UserDBHelper uDBHelper = new UserDBHelper(ctx);
-            SQLiteDatabase db = uDBHelper.getWritableDatabase();
+            MovieDBHelper mDBHelper = new MovieDBHelper(ctx);
+            SQLiteDatabase db = mDBHelper.getWritableDatabase();
 
 
             int count = 0;
@@ -61,8 +70,9 @@ public class BackgroundTask extends AsyncTask<Void, Void, Void> {
             {
                 JSONObject jo = jsonArray.getJSONObject(count);
                 count++;
-                uDBHelper.putInformation(jo.getInt("user_id"),jo.getString("username"),jo.getString("first_name"),jo.getString("last_initial"),jo.getString("email"),jo.getBoolean("logged_in"), db);
+                mDBHelper.putInformation(jo.getInt("movie_id"),jo.getString("movie_title"),jo.getString("overview"),jo.getString("release_date"),jo.getString("image"), db);
             }
+            mDBHelper.close();
 
 
         } catch (MalformedURLException e) {
@@ -70,6 +80,8 @@ public class BackgroundTask extends AsyncTask<Void, Void, Void> {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return null;
@@ -82,6 +94,6 @@ public class BackgroundTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
+        progressDialog.dismiss();
     }
 }

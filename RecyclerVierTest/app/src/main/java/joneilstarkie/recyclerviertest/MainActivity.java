@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                BackgroundTask backroundTask = new BackgroundTask((MainActivity.this));
+                backroundTask.execute();
             }
         });
         b2.setOnClickListener(new View.OnClickListener() {

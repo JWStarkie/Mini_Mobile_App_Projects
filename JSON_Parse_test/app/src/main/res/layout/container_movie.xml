@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:scaleType="fitXY"
+        android:layout_height="60dp"
+        android:id="@+id/mImage"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Movie Title"
+        android:id="@+id/textMovieTitle"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/mImage"
+        android:layout_toLeftOf="@+id/readMore"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Read more ..."
+        android:id="@+id/readMore"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Overview"
+        android:inputType="textMultiLine"
+        android:textIsSelectable="false"
+        android:singleLine="false"
+        android:maxLines="2"
+        android:lines="2"
+        android:id="@+id/textOverview"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/textMovieTitle"
+        android:layout_toRightOf="@id/mImage"
+        android:layout_toEndOf="@id/mImage"
+        android:textColor="#666"/>
+
+</RelativeLayout>
