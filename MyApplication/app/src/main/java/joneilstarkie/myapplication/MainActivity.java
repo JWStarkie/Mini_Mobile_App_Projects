@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
-
         tabLayout.setupWithViewPager(viewPager);
 
     }

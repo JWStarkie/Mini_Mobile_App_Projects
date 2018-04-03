@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fragment_and_TabTest</string>
+    <string name="title_home">Home</string>
+    <string name="title_explore">Explore</string>
+    <string name="title_connect">Connect</string>
+    <string name="title_settings">Settings</string>
+</resources>
