@@ -1,5 +1,6 @@
 package testerson.testy.fragment_and_tabtest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,7 +10,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import testerson.testy.fragment_and_tabtest.Fragments.ConnectFragment;
 import testerson.testy.fragment_and_tabtest.Fragments.ExploreFragment;
@@ -19,7 +19,6 @@ import testerson.testy.fragment_and_tabtest.Fragments.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private TextView mTextMessage;
     private ViewPager viewPager;
     MenuItem prevMenuItem;
     BottomNavigationView bottomNavigationView;

@@ -1,14 +1,21 @@
 package testerson.testy.fragment_and_tabtest.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import testerson.testy.fragment_and_tabtest.Login;
 import testerson.testy.fragment_and_tabtest.R;
+import testerson.testy.fragment_and_tabtest.UserInfo;
+import testerson.testy.fragment_and_tabtest.UserSession;
+
 
 /**
  * Created by Owner on 03/04/2018.
@@ -16,6 +23,10 @@ import testerson.testy.fragment_and_tabtest.R;
 
 public class ConnectFragment extends Fragment {
 
+    private Button logoutButton;
+    private TextView tvEmail, tvUsername, tvFirst, tvLast;
+    private UserSession session;
+    private UserInfo userInfo;
     private Activity activity;
 
     @Nullable
@@ -26,8 +37,42 @@ public class ConnectFragment extends Fragment {
 
         activity = this.getActivity();
 
+        session = new UserSession(activity);
+        userInfo = new UserInfo(activity);
+//        logoutButton = (Button) findViewById(R.id.logOutButton);
+//        tvEmail = (TextView) findViewById(R.id.textViewEmail);
+//        tvUsername = (TextView) findViewById(R.id.textViewUsername);
+//        tvFirst = (TextView) findViewById(R.id.textViewFirstName);
+//        tvLast = (TextView) findViewById(R.id.textViewLast);
 
+        if (!session.isUserLoggedin()) {
+            startActivity(new Intent(activity, Login.class));
+            //finish();
+        }
+
+//        String username = userInfo.getKeyUsername();
+//        String email = userInfo.getKeyUsername();
+//        String firstN = userInfo.getKeyFirstName();
+//        String lastI = userInfo.getKeyLastInitial();
+//
+//        tvUsername.setText(username);
+//        tvEmail.setText(email);
+//        tvFirst.setText(firstN);
+//        tvLast.setText(lastI);
+
+//        logoutButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                session.setLoggedin(false);
+//                userInfo.clearUserInfo();
+//                startActivity(new Intent(activity, Login.class));
+//                //finish();
+//            }
+//        });
 
         return view;
     }
+
+
 }
