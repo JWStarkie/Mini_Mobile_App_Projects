@@ -39,16 +39,16 @@ public class ConnectFragment extends Fragment {
 
         session = new UserSession(activity);
         userInfo = new UserInfo(activity);
-//        logoutButton = (Button) findViewById(R.id.logOutButton);
-//        tvEmail = (TextView) findViewById(R.id.textViewEmail);
-//        tvUsername = (TextView) findViewById(R.id.textViewUsername);
-//        tvFirst = (TextView) findViewById(R.id.textViewFirstName);
-//        tvLast = (TextView) findViewById(R.id.textViewLast);
+//        logoutButton = (Button) view.findViewById(R.id.logOutButton);
+//        tvEmail = (TextView) view.findViewById(R.id.textViewEmail);
+//        tvUsername = (TextView) view.findViewById(R.id.textViewUsername);
+//        tvFirst = (TextView) view.findViewById(R.id.textViewFirstName);
+//        tvLast = (TextView) view.findViewById(R.id.textViewLast);
 
-        if (!session.isUserLoggedin()) {
-            startActivity(new Intent(activity, Login.class));
-            //finish();
-        }
+//        if (!session.isUserLoggedin()) {
+//            startActivity(new Intent(activity, Login.class));
+//            //finish();
+//        }
 
 //        String username = userInfo.getKeyUsername();
 //        String email = userInfo.getKeyUsername();

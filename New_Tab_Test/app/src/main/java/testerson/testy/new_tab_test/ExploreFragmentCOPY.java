@@ -1,4 +1,4 @@
-package testerson.testy.fragment_and_tabtest.Fragments;
+package testerson.testy.new_tab_test;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,27 +29,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import testerson.testy.fragment_and_tabtest.JSONParser;
-import testerson.testy.fragment_and_tabtest.MainActivity;
-import testerson.testy.fragment_and_tabtest.MovieActivity;
-import testerson.testy.fragment_and_tabtest.MovieData;
-import testerson.testy.fragment_and_tabtest.R;
 
 /**
  * Created by Owner on 03/04/2018.
  */
 
-public class ExploreFragment extends Fragment {
+public class ExploreFragmentCOPY extends Fragment {
 
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
+    private Activity activity;
     public static String MOVIE_ID = "";
     private String TAG = "EXPLORE_ACTIVITY";
     private ListView lv;
     ArrayList<HashMap<String, String>> movieList;
-    private Activity activity;
 
     @Nullable
     @Override
@@ -69,13 +61,11 @@ public class ExploreFragment extends Fragment {
                 Log.i("Hello ListView", "You clicked item: " + id + " at position: " + position);
                 Intent myIntent = new Intent(activity, MovieActivity.class);
                 MOVIE_ID = movieList.get((int) id).get("id");
-
                 startActivity(myIntent);
             }
         });
 
         new ServerPull().execute();
-
 
         return view;
     }
@@ -102,8 +92,9 @@ public class ExploreFragment extends Fragment {
 
                 // Enter URL address where your json file resides
                 // Even you can make call to php file which returns json data
-                url = new URL("http://orbiculate-captain.000webhostapp.com/get_movie_info.php");
-                //url = new URL("http://192.168.64.2/php_files/get_movie_info.php");
+//                url = new URL("http://192.168.64.2/php_files/get_movie_info.php");
+                url = new URL("http://orbiculate-captain.000webhostapp.com/Jo/get_movie_info.php");
+
 
             } catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
@@ -118,7 +109,7 @@ public class ExploreFragment extends Fragment {
                 conn.setConnectTimeout(CONNECTION_TIMEOUT);
                 conn.setRequestMethod("GET");
 
-                // setDoOutput to true as we recieve data from json file
+                // setDoOutput to true as we receive data from json file
                 conn.setDoOutput(true);
 
             } catch (IOException e1) {
@@ -165,45 +156,38 @@ public class ExploreFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-
             pdLoading.dismiss();
-
-            List<MovieData> data=new ArrayList<>();
 
             pdLoading.dismiss();
             try {
-                    JSONArray movies = new JSONArray(result);
+                JSONArray movies = new JSONArray(result);
 
-                    // looping through All Contacts
-                    for (int i = 0; i < movies.length(); i++) {
+                // looping through All Contacts
+                for (int i = 0; i < movies.length(); i++) {
 
-                        JSONObject c = movies.getJSONObject(i);
+                    JSONObject c = movies.getJSONObject(i);
 
-                        String id = c.getString("id");
-                        String movie_title = c.getString("title");
-                        String movie_overview = c.getString("overview");
-                        //String movie_release = c.getString("release_date");
-                        //String address = c.getString("address");
-                        //String gender = c.getString("gender");
+                    String id = c.getString("movie_id");
+                    String movie_title = c.getString("movie_title");
+                    String movie_overview = c.getString("overview");
 
-                        // tmp hash map for single movie
-                        HashMap<String, String> movie = new HashMap<>();
+                    // tmp hash map for single movie
+                    HashMap<String, String> movie = new HashMap<>();
 
-                        // adding each child node to HashMap key => value
-                        movie.put("id", id);
-                        movie.put("title", movie_title);
-                        movie.put("overview", movie_overview);
-                        //movie.put("release_date", movie_release);
+                    // adding each child node to HashMap key => value
+                    movie.put("movie_id", id);
+                    movie.put("movie_title", movie_title);
+                    movie.put("overview", movie_overview);
 
-                        // adding movies to movies list
-                        movieList.add(movie);
-                    }
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    // adding movies to movies list
+                    movieList.add(movie);
                 }
+            } catch (final JSONException e) {
+                Log.e(TAG, "Json parsing error: " + e.getMessage() + result);
+            }
 
             ListAdapter adapter = new SimpleAdapter(activity, movieList,
-                    R.layout.explore_list_item, new String[]{ "title","overview"},
+                    R.layout.list_item, new String[]{ "movie_title","overview"},
                     new int[]{R.id.movie_title, R.id.movie_overview});
 
             lv.setAdapter(adapter);

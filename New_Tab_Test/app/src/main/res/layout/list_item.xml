@@ -5,12 +5,11 @@
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/list_image"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--android:layout_alignBottom="@id/movie_title"-->
-        <!--android:layout_toLeftOf="@id/movie_title"/>-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignBottom="@id/movie_title"
+        android:layout_toLeftOf="@id/movie_title"/>
 
     <TextView
         android:id="@+id/movie_title"
@@ -26,18 +25,18 @@
         android:id="@+id/movie_overview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorAnother"
         android:textStyle="bold"
         android:singleLine="true"
         android:layout_below="@id/movie_title"
         android:ellipsize="end" />
 
 
-    <TextView
-        android:id="@+id/release_date"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#785032"
-        android:textStyle="bold" />
+    <!--<TextView-->
+        <!--android:id="@+id/release_date"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="#785032"-->
+        <!--android:textStyle="bold" />-->
 
 </RelativeLayout>
