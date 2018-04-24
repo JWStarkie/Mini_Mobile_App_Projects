@@ -102,7 +102,7 @@ public class ExploreFragment extends Fragment {
 
                 // Enter URL address where your json file resides
                 // Even you can make call to php file which returns json data
-                url = new URL("http://orbiculate-captain.000webhostapp.com/get_movie_info.php");
+                url = new URL("http://orbiculate-captain.000webhostapp.com/Jo/get_movie_info.php");
                 //url = new URL("http://192.168.64.2/php_files/get_movie_info.php");
 
             } catch (MalformedURLException e) {

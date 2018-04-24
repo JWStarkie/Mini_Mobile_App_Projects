@@ -29,7 +29,12 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
     TextView toolbar_title, overviewTV, releaseTV, popularityTV, sorrynoVidTV;
     ImageView movieIV, ratingIV;
     JSONObject jsonObj;
-    String youtubeKey;
+    String youtubeKey, movie_release, movie_title;
     String URL = "http://orbiculate-captain.000webhostapp.com/Jo/get_movie_trailer.php";
     private WebView webview;
+    long today_timeInMillis, end_timeInMillis;
+    FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,13 +59,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setImageResource(R.drawable.save_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                new AddMoviePush().execute();
+//                Snackbar.make(view, "Your movie has been saved", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 
@@ -80,6 +89,43 @@ public class MainActivity extends AppCompatActivity {
 
         youtubeServerPull();
 
+    }
+    private class AddMoviePush extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String end_date = movie_release;
+            Calendar todaysDate = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date final_end_date = sdf.parse(end_date);
+                today_timeInMillis = todaysDate.getTimeInMillis();
+                end_timeInMillis = final_end_date.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+//                String userID = userInfo.getKeyUserID();
+            String user_id = "1";
+            String new_URL = "http://orbiculate-captain.000webhostapp.com/Mario/addMovie.php/?userID=" + user_id + "&movieID=" + str;
+            new_URL += "&movieTitle=" + movie_title.replace(" ", "%20") + "&releaseDate=" + end_timeInMillis + "&dateAdded=" + today_timeInMillis;
+
+            Log.e(TAG, "Url: " + new_URL);
+
+            JSONParser sh = new JSONParser();
+            String jsonStr = sh.makeServiceCall(new_URL);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+            if (jsonStr != null) {
+                fab.setImageResource(R.drawable.saved_button);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(MainActivity.this, "Your movie has been saved." , Toast.LENGTH_LONG).show();
+
+        }
     }
 
     private class WebPull extends AsyncTask<Void, Void, Void> {
@@ -137,8 +183,8 @@ public class MainActivity extends AppCompatActivity {
                 // Getting movie information movie
                 String backdrop_path = jsonObj.getString("backdrop_path");
                 String poster_path = jsonObj.getString("poster_path");
-                String movie_title = jsonObj.getString("title");
-                String movie_release = jsonObj.getString("release_date");
+                movie_title = jsonObj.getString("title");
+                movie_release = jsonObj.getString("release_date");
                 String movie_overview = jsonObj.getString("overview");
                 int popularity = jsonObj.getInt("popularity");
 
